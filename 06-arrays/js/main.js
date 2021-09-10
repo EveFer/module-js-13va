@@ -1,11 +1,11 @@
 
-let arrayKoders = [
-    "Paco", 
-    "Clau",
-    "Fanny",
-    "Nancy",
-    "Pablo"
-]
+// let arrayKoders = [
+//     "Paco", 
+//     "Clau",
+//     "Fanny",
+//     "Nancy",
+//     "Pablo"
+// ]
 
 /* Hola, mi nombre es ${nombre} */
 
@@ -110,3 +110,21 @@ basado en su numero asignado
 - Permitir agregar un koder en alguna posicion deseada, 
   por ejemplo: "Fanny Alvarez, lugar 3"
 */
+
+const arrayKoders = [
+  "Fanny Alvarez",
+  "Elias Herrera",
+  "Kraken Perez Salinas",
+  "Clau Rodriguez"
+]
+
+function addKoder() {
+  let koder = prompt("Agrega el nombre del koder")
+  arrayKoders.push(koder)
+}
+
+function printKoders() {
+  for(let i = 0; i < arrayKoders.length; i++) {
+    console.log(`koder ${i + 1}: ${arrayKoders[i]}`)
+  }
+}
