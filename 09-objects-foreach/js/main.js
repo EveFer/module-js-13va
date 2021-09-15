@@ -381,6 +381,16 @@ console.log(avgMentors)
   "Mi nombre es {name} y mi promedio es {promedio}"
 */
 
+
+/*
+arrayAverage = [
+    { 
+        name: "",
+        average: 9.0
+    }
+]
+
+*/
 let arrayStringsMentors = []
 
 avgMentors.forEach((mentor)=> {
@@ -388,8 +398,21 @@ avgMentors.forEach((mentor)=> {
     let { name, average,  } = mentor
     arrayStringsMentors.push(`Mi nombre es ${name} y mi promedio es ${average}`)
 })
-
 console.log(arrayStringsMentors)
+
+// let arrayLabelsMentors = avgMentors.map((mentor) => {
+//     const { name, average,  } = mentor
+//     const label = `Mi nombre es ${name} y mi promedio es ${average}`
+//     return label
+// })
+
+//
+const arrayLabelsMentors = avgMentors.map((mentor) => `Mi nombre es ${mentor.name} y mi promedio es ${mentor.average}`)
+
+
+console.log("Con Map:")
+console.log(arrayLabelsMentors)
+
 
 // - Obtener la lista de mentores cuyo promedio sea mayor a 9.5
 
@@ -399,3 +422,12 @@ avgMentors.forEach((mentor)=> {
     mentor.average >= 9.5 ? mentorsTop.push(mentor) : null
 })
 console.log(mentorsTop)
+
+let newArraySuperMentors = avgMentors.filter((mentor) => {
+    if(mentor.average >= 9.5) {
+        return mentor
+    }
+})
+
+console.log("Filter")
+console.log(newArraySuperMentors)
