@@ -198,7 +198,7 @@ const productsOrdered = arrayProducts => {
     return products
 }
 
-console.log(productsOrdered(products))  
+// console.log(productsOrdered(products))  
 
 
 // - obtener todos los productos < a $50 y obtener >= $50
@@ -238,3 +238,175 @@ const getTotalByType = (type, arrayProducts) => {
                : accum // si no es de tipo drink - regresa el acumulado
     }, 0)
 }
+
+
+
+const songsData = [
+    {
+        name: "¿Dónde jugarán los niños?",
+        band: "Maná",
+        releaseYear: "1992",
+        statistics: {
+            likes: 20000,
+            reproductions: 8000
+        },
+    },
+    {
+        name: "La muralla verde",
+        band: "Enanitos Verdes",
+        releaseYear: "1986",
+        statistics: {
+            likes: 21000,
+            reproductions: 19000
+        },
+    },
+    {
+        name: "Te Ví En Un Tren",
+        band: "Enanitos Verdes",
+        releaseYear: "1987",
+        statistics: {
+            likes: 20000,
+            reproductions: 23490
+        },
+    },
+    {
+        name: "Mariposa Traicionera",
+        band: "Maná",
+        releaseYear: "2002",
+        statistics: {
+            likes: 12000,
+            reproductions: 25690
+        },
+    },
+    {
+        name: "Rayando el Sol",
+        band: "Maná",
+        releaseYear: "1990",
+        statistics: {
+            likes: 12000,
+            reproductions: 18000
+        },
+    },
+    {
+        name: "La celula que explota",
+        band: "Jaguares",
+        releaseYear: "1999",
+        statistics: {
+            likes: 12000,
+            reproductions: 23421
+        },
+    },
+    {
+        name: "No dejes que...",
+        band: "Jaguares",
+        releaseYear: "1999",
+        statistics: {
+            likes: 12345,
+            reproductions: 10000
+        },
+    },
+    {
+        name: "Entre dos tierras",
+        band: "Heroes del Silencio",
+        releaseYear: "1999",
+        statistics: {
+            likes: 12345,
+            reproductions: 10000
+        },
+    }
+]
+// Agrupar la canciones por banda
+
+const stringToCamelCase = string => {
+    let stringCamelCased = string.split(" ").reduce((accum, word, index)=>{
+        // console.log(word)
+        let newString = word.toLowerCase()
+        // console.log('index:', index, "word:", newString)
+        // console.log(accum)
+        return index !== 0 //2º vez index == 2
+                ? accum + newString.charAt(0).toUpperCase() + newString.slice(1)
+                : accum + newString   // la primera vez
+    }, "")
+    return stringCamelCased
+}
+// console.log(stringToCamelCase("Enanitos Verdes"))
+
+// Heroes del Silencio  -> heroesDelSilencio
+
+const getSongsByBand = arraySongs => {
+    return arraySongs.reduce((accum, song)=>{
+        // destructuring
+        const { band } = song
+        let bandWithCamelCased = stringToCamelCase(band)
+        console.log(band)
+        return !accum[bandWithCamelCased]
+                ? {...accum, [bandWithCamelCased]: [song]} // si no existe la propiedad
+                : {...accum, [bandWithCamelCased]: [...accum[bandWithCamelCased], song]} // cuando ya existe la propiedad
+    }, {})
+}
+
+console.log(getSongsByBand(songsData)) 
+// enanitosVerdes
+
+
+//
+let arrayPersons = [
+    {
+        name: "Alice", age: 25, voted: true, gender: "mujer"
+    },
+    {
+        name: "Jenifer", age: 26, voted: false, gender: "mujer"
+    },
+    {
+        name: "Bruno", age: 48, voted: false, gender: "hombre"
+    },
+    {
+        name: "Jon", age: 22, voted: true, gender: "hombre"
+    },
+    {
+        name: "Brian", age: 20, voted: false, gender: "hombre"
+    },
+    {
+        name: "Luis", age: 38, voted: true, gender: "hombre"
+    },
+    {
+        name: "David", age: 29, voted: true, gender: "hombre"
+    },
+    {
+        name: "Ximena", age: 40, voted: false, gender: "mujer"
+    },
+    {
+        name: "Paulet", age: 37, voted: false, gender: "mujer"
+    },
+    {
+        name: "Albert", age: 45, voted: true, gender: "hombre"
+    },
+    {
+        name: "Mike", age: 22, voted: false, gender: "hombre"
+    },
+    {
+        name: "Tami", age: 35, voted: true, gender: "hombre"
+    },
+    {
+        name: "Mari", age: 28, voted: true, gender: "mujer"
+    },
+    {
+        name: "Mireya", age: 18, voted: true, gender: "mujer"
+    },
+    {
+        name: "Tamara", age: 18, voted: true, gender: "mujer"
+    },
+]
+
+/*
+
+Usar reduce para obtener la siguiente informacion
+- Un array con aquellas personas que votaron
+- la edad promedio de todos los votantes
+- un array con aquellos votantes que votaron y que son menores a 30 años
+- la edad promedio de los no votantes
+- el porcentaje de votantes vs no votante
+
+- el procentaje de mujeres que votaron
+- el porcentaje de los hombres que votaron
+*/
