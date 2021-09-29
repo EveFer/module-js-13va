@@ -20,22 +20,22 @@ let number = 0
 //     counter.textContent = number
 // })
 
-let buttons = document.querySelectorAll(".btn-test")
-console.log(buttons)
+// let buttons = document.querySelectorAll(".btn-test")
+// console.log(buttons)
 
-buttons.forEach((btn) => {
-    btn.addEventListener("click", (event)=> {
-        console.log("clicked..")
-        console.log(event)
-        console.log(event.target) // elemento - button
-        console.log(event.target.id)
-        let id = event.target.id
-        id === "btn-restar"
-            ? number--
-            : number++
-        counter.textContent = number
-    })
-})
+// buttons.forEach((btn) => {
+//     btn.addEventListener("click", (event)=> {
+//         console.log("clicked..")
+//         console.log(event)
+//         console.log(event.target) // elemento - button
+//         console.log(event.target.id)
+//         let id = event.target.id
+//         id === "btn-restar"
+//             ? number--
+//             : number++
+//         counter.textContent = number
+//     })
+// })
 
 let kodersArray = [
     {
@@ -52,6 +52,22 @@ let kodersArray = [
     }
 ]
 
+
+
+document.getElementById("btn-agregar").addEventListener("click", (event)=> {
+//   event.preventDefault()
+  let newKoder = {}
+  document.querySelectorAll("form#added-koders input").forEach((input) => {
+    //   console.log(input.name, input.value)
+      newKoder[input.name] = input.value
+    //   console.log(newKoder)
+  })
+  kodersArray.push(newKoder)
+  console.log(kodersArray)
+  printTable()
+})
+
+
 const createNode = (typeElement, text) => {
     let node = document.createElement(typeElement)
     node.textContent = text
@@ -60,8 +76,28 @@ const createNode = (typeElement, text) => {
     return node
 }
 
+const removeKoder = (event) => {
+    // console.log("Eliminando... jeje")
+    // Eliminar del array
+    let positionKoder = event.target.dataset.koderIndex
+    kodersArray.splice(positionKoder, 1)
+    // console.log(kodersArray)
+    printTable()
+}
+
 const printTable = () => {
     let tBody = document.getElementById("list-koders")
+
+    // tBody.innerHTML = ""
+
+    // 
+    // console.log(tBody.children)
+
+    // mientras tBody tanga elementos va a eliminar el ultimo hijo
+    while(tBody.lastElementChild) {
+        tBody.removeChild(tBody.lastElementChild)
+    }
+
     kodersArray.forEach((koder, index) => {
         let {name, lastName} = koder
         let tr = document.createElement("tr")
@@ -74,10 +110,9 @@ const printTable = () => {
         let button = createNode("button", "Eliminar")
         button.classList.add("btn", "btn-danger")
 
-        button.addEventListener("click", ()=> {
-            console.log("Eliminando... jeje")
-            // Eliminar del array
-        })
+        button.setAttribute("data-koder-index", index)
+
+        button.addEventListener("click", removeKoder)
 
         tdButton.appendChild(button)
 
@@ -91,4 +126,5 @@ const printTable = () => {
 }
 
 printTable()
+
 
