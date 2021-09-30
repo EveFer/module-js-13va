@@ -1,34 +1,39 @@
 
-const xhr = new XMLHttpRequest()
 
-// console.log(xhr)
+const getUsers = () => {
+    const xhr = new XMLHttpRequest()
 
-// Agregando el listener para ver el estado de mi peticion
-xhr.addEventListener('readystatechange', () => {
-    // valida que la peticion se completo
-    if(xhr.readyState === 4) {
-        // Validando en status
-        if(xhr.status >= 200 && xhr.status <= 299) {
-            console.log(xhr.status)
-            let responseAjax = xhr.responseText
-            console.log(responseAjax)
-            let responseParsed = JSON.parse(responseAjax)
-            console.log(responseParsed)
-            // 
-            printList(responseParsed)
-        }else {
-            console.log("Ocurrio un error: ", xhr.status, "Not Found")
+    // console.log(xhr)
+    
+    // Agregando el listener para ver el estado de mi peticion
+    xhr.addEventListener('readystatechange', () => {
+        // valida que la peticion se completo
+        if(xhr.readyState === 4) {
+            // Validando en status
+            if(xhr.status >= 200 && xhr.status <= 299) {
+                console.log(xhr.status)
+                let responseAjax = xhr.responseText
+                console.log(responseAjax)
+                let responseParsed = JSON.parse(responseAjax)
+                console.log(responseParsed)
+                // 
+                printList(responseParsed)
+            }else {
+                console.log("Ocurrio un error: ", xhr.status, "Not Found")
+            }
+            
+            // JSON.parse() // convierte de un string a un objeto valido de js
+            // JSON.stringify() // Convierte un objeto de js a un string
         }
-        
-        // JSON.parse() // convierte de un string a un objeto valido de js
-        // JSON.stringify() // Convierte un objeto de js a un string
-    }
-})
+    })
+    
+    // instruccion que me me permite abrir la peticion
+    xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true)
+    
+    xhr.send()    
+}
 
-// instruccion que me me permite abrir la peticion
-xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true)
-
-xhr.send()
+getUsers()
 
 /*
 Paso 1 - Crear una instacia de mi objeto XMLHttpRequest

@@ -37,22 +37,23 @@ let number = 0
 //     })
 // })
 
-let kodersArray = [
-    {
-        name: "Emi",
-        lastName:  "de León"
-    },
-    {
-        name: "Clau", 
-        lastName: "Rodriguez"
-    },
-    {
-        name: "Fanny", 
-        lastName: "Alvarez"
-    }
-]
+let kodersArray = []
 
+// https://api-13va-default-rtdb.firebaseio.com/.json
 
+const createKoder = (koderObject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.addEventListener("readystatechange", () => {
+        if(xhr.readyState === 4) {
+            if(xhr.status === 200) {
+                console.log(xhr.responseText)
+            }
+        }
+    })
+    xhr.open("POST", "https://api-13va-default-rtdb.firebaseio.com/.json", true)
+
+    xhr.send(JSON.stringify(koderObject))
+}
 
 document.getElementById("btn-agregar").addEventListener("click", (event)=> {
 //   event.preventDefault()
@@ -62,8 +63,10 @@ document.getElementById("btn-agregar").addEventListener("click", (event)=> {
       newKoder[input.name] = input.value
     //   console.log(newKoder)
   })
-  kodersArray.push(newKoder)
-  console.log(kodersArray)
+//   kodersArray.push(newKoder)
+//   console.log(kodersArray)
+//  {name: "Fernanda", lastName: "Palacios"}
+  createKoder(newKoder)
   printTable()
 })
 
