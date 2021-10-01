@@ -47,27 +47,90 @@ const createKoder = (koderObject) => {
         if(xhr.readyState === 4) {
             if(xhr.status === 200) {
                 console.log(xhr.responseText)
+                getKoders()
             }
         }
     })
+
+    // yo construimos la peticion
     xhr.open("POST", "https://api-13va-default-rtdb.firebaseio.com/.json", true)
 
+    // Enviamos la peticion
     xhr.send(JSON.stringify(koderObject))
 }
 
+const getKoders = () => {
+    kodersArray = []
+    const xhr = new XMLHttpRequest()
+    xhr.addEventListener("readystatechange", () => {
+        if(xhr.readyState === 4) {
+            if(xhr.status === 200) {
+                
+                let response = xhr.responseText
+                let kodersObject = JSON.parse(response)
+                console.log(kodersObject)
+                // for (const key in kodersObject) {
+                //     console.log(key)
+                //     console.log(kodersObject[key])
+                //     let koderObject = kodersObject[key]
+                //     // koderObject.id = key
+                //     kodersArray = [...kodersArray, {...koderObject, id:key}]
+                // }
+                // console.log("Keys")
+                // console.log(Object.keys(kodersObject))
+                // console.log("Values")
+                // console.log(Object.values(kodersObject))
+                // console.log("Entries")
+                // console.log(Object.entries(kodersObject))
+                if(kodersObject) {
+                    kodersArray = Object.keys(kodersObject).map((key) => {
+                        let koderObject = kodersObject[key]
+                        return {...koderObject, id:key}
+                    })
+                    printTable()
+                }else {
+                    printTable()
+                    console.log("No hay koders u.u")
+                }
+                
+            }
+        }
+    })
+    xhr.open("GET", "https://api-13va-default-rtdb.firebaseio.com/.json", true)
+
+    xhr.send()
+}
+
+const deleteKoder = (idKoderToDelete) => {
+    const xhr = new XMLHttpRequest()
+    xhr.addEventListener("readystatechange", () => {
+        if(xhr.readyState === 4) {
+            if(xhr.status === 200) {
+                console.log(xhr.responseText)
+                getKoders()
+            }
+        }
+    })
+    xhr.open("DELETE", `https://api-13va-default-rtdb.firebaseio.com/${idKoderToDelete}.json`, true)
+
+    xhr.send()
+}
+
 document.getElementById("btn-agregar").addEventListener("click", (event)=> {
-//   event.preventDefault()
+  event.preventDefault()
   let newKoder = {}
   document.querySelectorAll("form#added-koders input").forEach((input) => {
     //   console.log(input.name, input.value)
-      newKoder[input.name] = input.value
-    //   console.log(newKoder)
+      
+      if(!input.value) {
+          newKoder = null
+      }else {
+        newKoder[input.name] = input.value
+      }
+      console.log(newKoder)
   })
-//   kodersArray.push(newKoder)
-//   console.log(kodersArray)
-//  {name: "Fernanda", lastName: "Palacios"}
+  if(!newKoder) return alert("Camplos obligatorios..")
   createKoder(newKoder)
-  printTable()
 })
 
 
@@ -79,13 +142,11 @@ const createNode = (typeElement, text) => {
     return node
 }
 
-const removeKoder = (event) => {
-    // console.log("Eliminando... jeje")
+const clickToRemoveKoder = (event) => {
+    console.log("Eliminando... jeje")
     // Eliminar del array
-    let positionKoder = event.target.dataset.koderIndex
-    kodersArray.splice(positionKoder, 1)
-    // console.log(kodersArray)
-    printTable()
+    let idKoder = event.target.dataset.koderId
+    deleteKoder(idKoder)
 }
 
 const printTable = () => {
@@ -102,7 +163,7 @@ const printTable = () => {
     }
 
     kodersArray.forEach((koder, index) => {
-        let {name, lastName} = koder
+        let {name, lastName, id} = koder
         let tr = document.createElement("tr")
 
         let tdIndex = createNode("td", index + 1)
@@ -113,9 +174,9 @@ const printTable = () => {
         let button = createNode("button", "Eliminar")
         button.classList.add("btn", "btn-danger")
 
-        button.setAttribute("data-koder-index", index)
+        button.setAttribute("data-koder-id", id)
 
-        button.addEventListener("click", removeKoder)
+        button.addEventListener("click", clickToRemoveKoder)
 
         tdButton.appendChild(button)
 
@@ -128,6 +189,8 @@ const printTable = () => {
     })
 }
 
-printTable()
+// printTable()
+
+getKoders()
 
 
