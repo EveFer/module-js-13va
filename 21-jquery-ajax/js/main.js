@@ -28,64 +28,64 @@
 // })
 
 
-// funciones AJAX
-const getData = () => {
-    let products
-    $.ajax({
-        method: "GET",
-        url: "https://api-friki-market-default-rtdb.firebaseio.com/products.json",
-        success: response => { 
-            // console.log('response al terminar la peticion',response)
-            products = response
-        },
-        error: error => {
-            console.log(error)
-        },
-        async: false
-    })
-    // console.log(products)
-    return products
-}
+// // funciones AJAX
+// const getData = () => {
+//     let products
+//     $.ajax({
+//         method: "GET",
+//         url: "https://api-friki-market-default-rtdb.firebaseio.com/products.json",
+//         success: response => { 
+//             // console.log('response al terminar la peticion',response)
+//             products = response
+//         },
+//         error: error => {
+//             console.log(error)
+//         },
+//         async: false
+//     })
+//     // console.log(products)
+//     return products
+// }
 
-const createProduct = (productObject) => {
-    $.ajax({
-        method: "POST", 
-        url: "https://api-friki-market-default-rtdb.firebaseio.com/products.json",
-        data: JSON.stringify(productObject),
-        success: (response)=> {
+// const createProduct = (productObject) => {
+//     $.ajax({
+//         method: "POST", 
+//         url: "https://api-friki-market-default-rtdb.firebaseio.com/products.json",
+//         data: JSON.stringify(productObject),
+//         success: (response)=> {
 
-        },
-        error: error => {
+//         },
+//         error: error => {
 
-        }
-    })
-}
+//         }
+//     })
+// }
 
-const updateProduct = (keyProduct, newDataProduct) => {
-    $.ajax({
-        method: "PATCH",
-        url: `https://api-friki-market-default-rtdb.firebaseio.com/products/${keyProduct}.json`, 
-        data: JSON.stringify(newDataProduct),
-        success: (response)=> {
+// const updateProduct = (keyProduct, newDataProduct) => {
+//     $.ajax({
+//         method: "PATCH",
+//         url: `https://api-friki-market-default-rtdb.firebaseio.com/products/${keyProduct}.json`, 
+//         data: JSON.stringify(newDataProduct),
+//         success: (response)=> {
 
-        },
-        error: error => {
+//         },
+//         error: error => {
 
-        }
-    })
-}
-const deleteProduct = keyProduct => {
-    $.ajax({
-        method: "DELETE", 
-        url: `https://api-friki-market-default-rtdb.firebaseio.com/products/${keyProduct}.json`,
-        success: (response) => {
+//         }
+//     })
+// }
+// const deleteProduct = keyProduct => {
+//     $.ajax({
+//         method: "DELETE", 
+//         url: `https://api-friki-market-default-rtdb.firebaseio.com/products/${keyProduct}.json`,
+//         success: (response) => {
 
-        },
-        error: error => {
+//         },
+//         error: error => {
 
-        }
-    })
-}
+//         }
+//     })
+// }
 
 
 
@@ -118,7 +118,7 @@ const deleteProduct = keyProduct => {
 49 console.log("la suma es", suma)
 */
 
-let products = getData()
+// let products = getData()
 
 // https://api-13va-default-rtdb.firebaseio.com/[su-nombre]/mentors.json
 
@@ -129,3 +129,14 @@ let products = getData()
 
 // asincrono
 
+
+// 
+$('#form-add input').each(function(index) {
+    console.log(this)
+    console.log(index)
+    console.log($(this).val())
+})
+
+$(".wrapper-mentors").append(`<p>Holis</p>`)
+$(".wrapper-mentors").prepend(`<p>Inicio</p>`)
+$(".wrapper-mentors").empty()
