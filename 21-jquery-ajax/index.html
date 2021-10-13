@@ -12,21 +12,75 @@
 </head>
 
 <body>
+  <div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" id="form-edit" class="border border-rounded bg-dark text-white p-3 mt-3">
+            <div>
+              <label for="">Nombre</label>
+              <input class="form-control" name="name" type="text">
+            </div>
+            <div>
+              <label for="">Telefono</label>
+              <input class="form-control" name="phone" type="text">
+            </div>
+            <div>
+              <label for="">Github</label>
+              <input class="form-control" name="github" type="text">
+            </div>
+            <div>
+              <label for="">Url Github</label>
+              <input class="form-control" name="urlGithub" type="text">
+            </div>
+            <button type="button" class="btn btn-success btn-edit mt-3">Editar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form action="" id="form-add">
-          <input name="name" type="text" value="Mi nombre">
-          <input name="phone" type="text" value="345676543">
-          <input name="github" type="text" value="EveFer">
+        <form action="" id="form-add" class="border border-rounded text-white bg-dark p-3 mt-3">
+          <div>
+            <label for="">Nombre</label>
+            <input class="form-control" name="name" type="text" value="Fernanda Palacios">
+          </div>
+          <div>
+            <label for="">Telefono</label>
+            <input class="form-control" name="phone" type="text" value="9671686557">
+          </div>
+          <div>
+            <label for="">Github</label>
+            <input class="form-control" name="github" type="text" value="EveFer">
+          </div>
+          <div>
+            <label for="">Url Github</label>
+            <input class="form-control" name="urlGithub" type="text" value="https://github.com/EveFer">
+          </div>
+          <button type="button" class="btn btn-success btn-add mt-3">Guardar</button>
         </form>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 col-md-6 wrapper-mentors">
-
+    <div class="row wrapper-mentors mt-5">
+      <div class="col-12 col-md-6 ">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.
+            </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

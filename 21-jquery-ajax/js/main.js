@@ -130,13 +130,160 @@
 // asincrono
 
 
+
+let myModalEdit = new bootstrap.Modal(document.getElementById('modal-edit'))
+
 // 
-$('#form-add input').each(function(index) {
-    console.log(this)
-    console.log(index)
-    console.log($(this).val())
+const createMentor = (mentorData={name:"", phone:"", github:"", urlGithub:""}) => {
+    $.ajax({
+        method:"POST", 
+        url: "https://api-13va-default-rtdb.firebaseio.com/fer/mentors.json", 
+        data: JSON.stringify(mentorData),
+        success:(response)=> {
+            console.log(response)
+        },
+        error: (error) => {
+            console.log(error)
+        },
+        async: false
+    })
+}
+
+const getAllMentors = () => {
+    let mentors
+    $.ajax({
+        method:"GET", 
+        url: "https://api-13va-default-rtdb.firebaseio.com/fer/mentors.json", 
+        success:(response)=> {
+            // console.log(response)
+            mentors = response
+        },
+        error: (error) => {
+            console.log(error)
+        },
+        async: false
+    })
+    return mentors
+}
+
+const getAMentor = idMentor => {
+    let mentor
+    $.ajax({
+        method:"GET", 
+        url: `https://api-13va-default-rtdb.firebaseio.com/fer/mentors/${idMentor}.json`, 
+        success:(response)=> {
+            // console.log(response)
+            mentor = response
+        },
+        error: (error) => {
+            console.log(error)
+        },
+        async: false
+    })
+    return mentor
+}
+
+const deleteMentor = idMentor => {
+    $.ajax({
+        method:"DELETE", 
+        url: `https://api-13va-default-rtdb.firebaseio.com/fer/mentors/${idMentor}.json`, 
+        success:(response)=> {
+            console.log(response)
+        },
+        error: (error) => {
+            console.log(error)
+        },
+        async: false
+    })
+}
+
+const updateMentor = (idMentor, mentorData) => {
+    $.ajax({
+        method:"PATCH", 
+        url: `https://api-13va-default-rtdb.firebaseio.com/fer/mentors/${idMentor}.json`,
+        data: JSON.stringify(mentorData), 
+        success:(response)=> {
+            console.log(response)
+        },
+        error: (error) => {
+            console.log(error)
+        },
+        async: false
+    })
+}
+
+
+const getDataForm = (idForm) => {
+    let mentor = {}
+    $(`#${idForm} input`).each(function(){
+        let value = $(this).val()
+        let name = $(this).attr("name")
+        mentor = {...mentor, [name]: value}
+        $(this).val("")
+    })
+    return mentor
+}
+
+const printCards = mentorsCollection => {
+    $(".wrapper-mentors").empty()
+    for (const key in mentorsCollection) {
+        let {name, phone, github, urlGithub} = mentorsCollection[key]
+        let card = `
+        <div class="col-12 col-md-6 ">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${name}</h5>
+                <p class="card-text">Phone: ${phone}</p>
+                <a href="${urlGithub}" target="_blank" class="card-text d-block">${github}</a>
+                <button class="btn btn-danger btn-delete" data-id-mentor="${key}">Eliminar</button>
+                <button class="btn btn-primary btn-open-modal" data-bs-toggle="modal" data-bs-target="#modal-edit" data-id-mentor="${key}">Editar</button>
+            </div>
+            </div>
+        </div>
+        `
+        $(".wrapper-mentors").append(card)
+
+        $('.btn-delete').click((event)=>{
+            let idMentor = $(event.target).data("id-mentor")
+            console.log(idMentor)
+            deleteMentor(idMentor)
+            printCards(getAllMentors())
+        })
+
+        $(".btn-open-modal").click((event)=>{
+            let idMentor = $(event.target).data("id-mentor")
+            let mentor = getAMentor(idMentor)
+            let {name, phone, github, urlGithub} = mentor
+            $('#form-edit input').each(function() {
+                let nameInput = $(this).attr('name')
+
+                if(nameInput === "name")  $(this).val(name)
+                if(nameInput === "phone")  $(this).val(phone)
+                if(nameInput === "github")  $(this).val(github)
+                if(nameInput === "urlGithub")  $(this).val(urlGithub)
+            })
+
+            $(".btn-edit").click((event) =>{
+                let mentorToEdit = getDataForm("form-edit")
+                console.log(mentorToEdit)
+                updateMentor(idMentor, mentorToEdit)
+                printCards(getAllMentors())
+                myModalEdit.hide()
+            })
+        })
+
+
+    }
+}
+
+printCards(getAllMentors())
+
+$(".btn-add").click(()=> {
+    let mentor = getDataForm("form-add")
+    createMentor(mentor)
+    printCards(getAllMentors())
 })
 
-$(".wrapper-mentors").append(`<p>Holis</p>`)
-$(".wrapper-mentors").prepend(`<p>Inicio</p>`)
-$(".wrapper-mentors").empty()
+
+
+
